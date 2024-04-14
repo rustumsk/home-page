@@ -10,12 +10,35 @@ $tertiary-color: #9a8c98;
 %for-anchor{
     text-decoration: none;
     transition: .25s ease-out 0s;
-    font-size: 2vw;
+    font-size: 2rem;
     color: black;
     &:hover{
         transform: translateY(10px);
         border-bottom: solid black 2px;
         color: $secondary-color;
+    }
+}
+@mixin pics($url: "") {
+    flex-shrink: 0;
+    min-width: 20%;
+    height: 8rem;
+    background-image: url($url);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: solid .2vw black;
+    background-color: $secondary-color;
+    animation: translate 13s linear alternate infinite;
+    @keyframes translate {
+        0% {
+            transform: translateX(100px);
+        }
+        50% {
+            transform: translateX(-40rem);
+        }
+        100% {
+            transform: translateX(-100rem);
+        }
     }
 }
 body{
@@ -24,18 +47,21 @@ body{
     margin: 0;
 }
 .container{
-    height: 100%;
     padding-left: 10rem;
     padding-right: 10rem;
     background-color: $main-color;
     display: flex;
     flex-direction: column;
-    overflow: scroll;
+    flex-wrap: wrap;
 }
 .nav{
-    position: sticky;
+    top: -1px;
     flex: .5;
     display: flex;
+    flex-wrap: wrap;
+    position: sticky;
+    transition: background-color 2s ease-in;
+    z-index: 2;
     div{
         flex: 1;
     }
@@ -46,8 +72,9 @@ body{
         flex-shrink: .5;
         span{
             animation: 3s loading 1 forwards;
-            font-size: 3vw;
+            font-size: 2rem;
             padding-right: 5rem;
+            border-bottom: solid black .2rem;
             @keyframes loading {
                 from{
                     transform: translatey(-100px);
@@ -57,7 +84,6 @@ body{
                 }
                 to{
                     transform: translatey(0px);
-                    border-bottom: solid black .2rem;
                 }
             }
         }
@@ -82,29 +108,40 @@ body{
         }
     }
 }
+.nav.is-pinned {
+    background-color: $tertiary-color;
+} 
 .content{
     flex: 4;
     padding-left: 1vw;
-    .about{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    .abo{
+        border-bottom: solid .3rem $tertiary-color;
         height: 20em;
+        margin-top: 1rem;
         display: flex;
+        flex-wrap: wrap;
+        overflow: auto;
         .name{
-            flex: .8;
+            flex: 1;
             display: flex;
             flex-direction: column;
             align-items: start;
             justify-content: center;
-            font-size: 1.5vw;
+            font-size: 2rem;
             font-family: 'Roboto';
             h1{
-                animation: 1s slide-in 1;
+                flex: 1;
+                animation: 1s slide-in 1 ease-in-out;
                 transition: transform 2s ease-in 0s;
                 &:hover{
                     transform: rotatex(340deg);
                 }
                 @keyframes slide-in {
                     from{
-                        transform: translateX(-50vw);
+                        transform: translateX(-30vw);
                     }
                     to{
                         transform: translateX(0px);
@@ -112,9 +149,11 @@ body{
                 }
             }
             h2{
+                flex: 1;
                 padding: 0;
                 margin: 0;
-                font-size: 1.2vw;
+                margin-bottom: 1rem;
+                font-size: 2rem;
                 animation: 5s fade-in 1;
                 transition: transform 2s ease-in 0s;
                 &:hover{
@@ -130,17 +169,323 @@ body{
                 }
             }
         }
-        .description{
-            flex: 1;
-        }
+        .description {
+            flex: 0 1 50%;
+            display: flex;
+            flex-direction: column;
+            place-content: center;
+            padding-right: 5rem;
+            font-family: 'Roboto';
+            span {
+                font-size: 1.5rem;
+                text-align: center;
+            }
+        }        
+        
     }
     .skills{
         height: 15rem;
+        display: flex;
+        flex-direction: column;
+        font-family: 'Roboto';
+        margin-top: 4rem;
+        padding-bottom: 3rem;
+        border-bottom: solid .3rem black;
+        .s-title{
+            flex: 2;
+            display: grid;
+            place-content: center;
+            font-size: 2rem;
+            border-bottom: solid .3rem black;
+        }
+        .techs{
+            flex: 5;
+            flex-wrap: wrap;
+            display: flex;
+            flex-direction: column;
+            justify-content: end;
+            .main-carousel{
+                height: 80%;
+                display: flex;
+                gap: 1rem;
+                overflow: hidden;
+                margin-top: 1rem;
+                animation: 3s try ease-in;
+                .c{
+                    @include pics('./pics/c.png')
+                }
+                .java{
+                    @include pics('./pics/java.png')
+                }
+                .css{
+                    @include pics('./pics/css.png')
+                }
+                .jest{
+                    @include pics('./pics/jest.png')
+                }
+                .mysql{
+                    @include pics('./pics/mysql.png')
+                }
+                .js{
+                    @include pics('./pics/js.png')
+                }
+                .sass{
+                    @include pics('./pics/sass.png')
+                }
+                .cs{
+                    @include pics('./pics/cs.png')
+                }
+                .html{
+                    @include pics('./pics/html.png')
+                }
+            }
+        }
     }
     .projects{
         height: 40rem;
+        display: flex;
+        flex-direction: column;
+        .p-title{
+            height: auto;
+            margin-top: 4rem;
+            margin-bottom: 2rem;
+            span{
+                font-size: 2rem;
+                font-family: 'Roboto';
+                font-weight: bold;
+                border-bottom: solid .3rem black;
+            }
+        }
+        .p-container{
+            flex: 1;
+            display: flex;
+            overflow: scroll;
+            gap: 1rem;
+            div{
+                flex: 1;
+                border: solid 1px black;
+            }
+            .ttt{
+               background-color: $secondary-color;
+                display: flex;
+                flex-direction: column;
+                .o-title{
+                    padding: 1rem;
+                    font-size: 1.5rem;
+                    font-family: 'Roboto';
+                    span{
+                        border-bottom: solid .3rem black;
+                    }
+                }
+                .o-pic{
+                    flex: 5;
+                    border: none;
+                    display: flex;
+                    justify-content: center;
+                    padding: 3rem;
+                    padding-top: 1rem;
+                    .p{
+                        background-color: white;
+                        border: none;
+                        background-image: url(./pics/tdl.png);
+                        background-size: cover;
+                        background-repeat: no-repeat;
+                        border: solid .3rem black;
+                    }
+                }
+                .o-icons{
+                    height: auto;
+                    border: none;
+                    display: grid;
+                    grid-template-columns: 5rem 5rem;
+                    gap: 2rem;
+                    justify-content: end;
+                    .l{
+                        border: none;
+                        height: 50%;
+                        margin-right: 2rem;
+                        background-image: url(./icons/link.svg);
+                        background-repeat: no-repeat;
+                        background-size: contain;
+                        transition: translate 2s ease-in 1;
+                        &:hover{
+                            transform: translateY(-5px);
+                        }
+                    }
+                    .g{
+                        border: none;
+                        height: 50%;
+                        margin-right: 2rem;
+                        background-image: url(./icons/icons8-github.svg);
+                        background-repeat: no-repeat;
+                        background-size: contain;
+                        transition: translate 1s ease-in 1;
+                        &:hover{
+                            transform: translateY(-5px);
+                        }
+                    }
+                }
+            }
+            .tdl{
+                background-color: $secondary-color;
+                display: flex;
+                flex-direction: column;
+                .o-title{
+                    padding: 1rem;
+                    font-size: 1.5rem;
+                    font-family: 'Roboto';
+                    span{
+                        border-bottom: solid .3rem black;
+                    }
+                }
+                .o-pic{
+                    flex: 5;
+                    border: none;
+                    display: flex;
+                    justify-content: center;
+                    padding: 3rem;
+                    padding-top: 1rem;
+                    .p{
+                        background-color: white;
+                        border: none;
+                        background-image: url(./pics/tdl.png);
+                        background-size: cover;
+                        background-repeat: no-repeat;
+                        border: solid .3rem black;
+                    }
+                }
+                .o-icons{
+                    height: auto;
+                    border: none;
+                    display: grid;
+                    grid-template-columns: 5rem 5rem;
+                    gap: 2rem;
+                    justify-content: end;
+                    .l{
+                        border: none;
+                        height: 50%;
+                        margin-right: 2rem;
+                        background-image: url(./icons/link.svg);
+                        background-repeat: no-repeat;
+                        background-size: contain;
+                        transition: translate 2s ease-in 1;
+                        &:hover{
+                            transform: translateY(-5px);
+                        }
+                    }
+                    .g{
+                        border: none;
+                        height: 50%;
+                        margin-right: 2rem;
+                        background-image: url(./icons/icons8-github.svg);
+                        background-repeat: no-repeat;
+                        background-size: contain;
+                        transition: translate 1s ease-in 1;
+                        &:hover{
+                            transform: translateY(-5px);
+                        }
+                    }
+                }
+            }
+            .eas{
+                background-color: $secondary-color;
+                display: flex;
+                flex-direction: column;
+                .o-title{
+                    padding: 1rem;
+                    font-size: 1.5rem;
+                    font-family: 'Roboto';
+                    span{
+                        border-bottom: solid .3rem black;
+                    }
+                }
+                .o-pic{
+                    flex: 5;
+                    border: none;
+                    display: flex;
+                    justify-content: center;
+                    padding: 3rem;
+                    padding-top: 1rem;
+                    .p{
+                        background-color: white;
+                        border: none;
+                        background-image: url(./pics/tdl.png);
+                        background-size: cover;
+                        background-repeat: no-repeat;
+                        border: solid .3rem black;
+                    }
+                }
+                .o-icons{
+                    height: auto;
+                    border: none;
+                    display: grid;
+                    grid-template-columns: 5rem 5rem;
+                    gap: 2rem;
+                    justify-content: end;
+                    .l{
+                        border: none;
+                        height: 50%;
+                        margin-right: 2rem;
+                        background-image: url(./icons/link.svg);
+                        background-repeat: no-repeat;
+                        background-size: contain;
+                        transition: translate 2s ease-in 1;
+                        &:hover{
+                            transform: translateY(-5px);
+                        }
+                    }
+                    .g{
+                        border: none;
+                        height: 50%;
+                        margin-right: 2rem;
+                        background-image: url(./icons/icons8-github.svg);
+                        background-repeat: no-repeat;
+                        background-size: contain;
+                        transition: translate 1s ease-in 1;
+                        &:hover{
+                            transform: translateY(-5px);
+                        }
+                    }
+                }
+            }
+        }
+        @media (max-width: 768px) {
+            .p-container {
+                flex-direction: column;
+                padding: 3rem; /* Change to column layout for smaller screens */
+                .p{
+                    height: 8rem;
+                    width: 8rem;
+                }
+            }
+        }
+        @media (max-width: 1078px) {
+            .p-container {
+                padding: 3rem; /* Change to column layout for smaller screens */
+                .p{
+                    height: 8rem;
+                    width: 8rem;
+                }
+                .o-pic{
+                    padding: none;
+                }
+                .o-icons{
+                    height: 2rem;
+                }
+            }
+        }
     }
 }
-.contact{
-    flex: 1;
+.ct{
+    margin-top: 5rem;
+    height: 5rem;
+    margin-bottom: 0;
+    background-color: $secondary-color;
+}
+@media (max-width: 730px) {
+    .abo{
+    }
+    .hp{
+        border-bottom: solid 5px red;
+    }
 }
